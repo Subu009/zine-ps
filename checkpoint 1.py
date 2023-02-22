@@ -1,14 +1,12 @@
 import cv2
 import numpy as np
-
-cap = cv2.imread('CHECKPOINT1.png')
-cap = cv2.resize(cap, (340, 480))
-cv2.imshow('image that is sampled (checpoint 1)',cap)
+img = cv2.imread('CHECKPOINT1.jpg')
+lower = np.array([0, 0, 0], dtype=np.uint8)
+upper = np.array([100, 100, 100], dtype=np.uint8)
+mask = cv2.inRange(img, lower, upper)
+masked_img = cv2.bitwise_and(img,img,mask=mask)
+cv2.imshow('Masked Image', masked_img)
+print("RGB values of masked image:")
+print(masked_img)
 cv2.waitKey(0)
-for x in range(0, 340, 1):
-    for y in range(0, 480, 1):
-        color = cap[y, x]
-        b,g,r=color
-        if b!=255 or g!=255 or r!=255:
-            print (color)
-            break
+cv2.destroyAllWindows()
